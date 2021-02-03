@@ -1,0 +1,33 @@
+{% extends 'Register/base.html' %}
+{% block content %}
+<h1>Biology lab</h1>
+<a href="javascript:showhide('Colour Vision ')" style="color:purple;"> Colour Vision </a>    
+<div id="Colour Vision " style="display:none;">    
+<div>
+	<h1>Colour Vision</h1>
+	<iframe src="https://phet.colorado.edu/sims/html/color-vision/latest/color-vision_en.html" width="1600" height="600" scrolling="no" allowfullscreen></iframe>
+</div>
+</div>
+
+<br>
+<a href="javascript:showhide('Natural Selection')" style="color:purple;"> Natural Selection  </a>    
+<div id="Natural Selection" style="display:none;">    
+<div>
+		<h1>Natural Selection </h1>
+<iframe src="https://phet.colorado.edu/sims/html/natural-selection/latest/natural-selection_en.html" width="1600" height="600" scrolling="no" allowfullscreen></iframe>
+</div>
+</div>
+<br>
+<a href="javascript:showhide('PH Scale')" style="color:purple;"> PH Scale </a>    
+<div id="PH Scale" style="display:none;">    
+<div>
+		<h1>PH Scale</h1>
+<iframe src="https://phet.colorado.edu/sims/html/ph-scale/latest/ph-scale_en.html" width="1600" height="600" scrolling="no" allowfullscreen></iframe>
+</div>
+</div>
+<script>
+function showhide(id) {     var e = document.getElementById(id);    e.style.display = (e.style.display == 'block') ? 'none' : 'block'; }
+</script>
+
+
+{% endblock %}

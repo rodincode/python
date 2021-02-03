@@ -1,0 +1,283 @@
+{% load static %}
+<!DOCTYPE HTML>
+<html>
+<head>
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+<link href="https://fonts.googleapis.com/css?family=Poppins:400,500&display=swap"
+			rel="stylesheet" />
+
+		<title>Vision Labs</title>
+<style>
+* {
+	margin: 0px;
+	padding: 0px;
+	box-sizing: border-box;
+}
+
+body {
+	font-family: 'Poppins', sans-serif;
+}
+button {
+	font-family: 'Poppins', sans-serif;
+}
+
+header {
+	display: flex;
+	width: 90%;
+	height: 10vh;
+	margin: auto;
+	align-items: center;
+}
+
+.logo-container,
+.nav-links,
+.cart {
+	display: flex;
+}
+
+.logo-container {
+	flex: 1;
+}
+.logo {
+	font-weight: 400;
+	margin: 5px;
+}
+nav {
+	flex: 2;
+}
+.nav-links {
+	justify-content: space-around;
+	list-style: none;
+}
+.nav-link {
+	color: #5f5f79;
+	font-size: 18px;
+	text-decoration: none;
+}
+.cart {
+	flex: 1;
+	justify-content: flex-end;
+}
+
+.presentation {
+	display: flex;
+	width: 90%;
+	margin: auto;
+	min-height: 80vh;
+	align-items: center;
+}
+.introduction {
+	flex: 1;
+}
+.intro-text h1 {
+	font-size: 44px;
+	font-weight: 500;
+	background: linear-gradient(to right, #494964, #6f6f89);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+}
+.intro-text p {
+	margin-top: 5px;
+	font-size: 22px;
+	color: #585772;
+}
+.cta {
+	padding: 50px 0px 0px 0px;
+}
+.cta-select {
+	border: 2px solid #c36cbb;
+	background: transparent;
+	color: #c36cbb;
+	width: 150px;
+	height: 50px;
+	cursor: pointer;
+	font-size: 16px;
+}
+.cta-add {
+	background: #c36cbb;
+	width: 150px;
+	height: 50px;
+	cursor: pointer;
+	font-size: 16px;
+	border: none;
+	color: white;
+	margin: 30px 0px 0px 30px;
+}
+
+.cover {
+	flex: 1;
+	display: flex;
+	justify-content: center;
+	height: 60vh;
+}
+.cover img {
+	height: 100%;
+	filter: drop-shadow(0px 5px 3px black);
+	animation: drop 1.5s ease;
+}
+
+.big-circle {
+	position: absolute;
+	top: 0px;
+	right: 0px;
+	z-index: -1;
+	opacity: 0.5;
+	height: 80%;
+}
+.medium-circle {
+	position: absolute;
+	top: 30%;
+	right: 30%;
+	z-index: -1;
+	height: 60%;
+	opacity: 0.4;
+}
+.small-circle {
+	position: absolute;
+	bottom: 0%;
+	left: 20%;
+	z-index: -1;
+}
+
+.laptop-select {
+	width: 15%;
+	display: flex;
+	justify-content: space-around;
+	position: absolute;
+	right: 20%;
+}
+
+@keyframes drop {
+	0% {
+		opacity: 0;
+		transform: translateY(-80px);
+	}
+	100% {
+		opacity: 1;
+		transform: translateY(0px);
+	}
+}
+
+@media screen and (max-width: 1024px) {
+	.presentation {
+		flex-direction: column;
+	}
+	.introduction {
+		margin-top: 5vh;
+		text-align: center;
+	}
+	.intro-text h1 {
+		font-size: 30px;
+	}
+	.intro-text p {
+		font-size: 18px;
+	}
+	.cta {
+		padding: 10px 0px 0px 0px;
+	}
+	.laptop-select {
+		bottom: 5%;
+		right: 50%;
+		width: 50%;
+		transform: translate(50%, 5%);
+	}
+	.cover img {
+		height: 80%;
+	}
+	.small-circle,
+	.medium-circle,
+	.big-circle {
+		opacity: 0.2;
+	}
+}
+
+/* The container <div> - needed to position the dropdown content */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+/* Links inside the dropdown */
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+/* Change color of dropdown links on hover */
+.dropdown-content a:hover {background-color: #ddd;}
+
+/* Show the dropdown menu on hover */
+.dropdown:hover .dropdown-content {display: block;}
+
+/* Change the background color of the dropdown button when the dropdown content is shown */
+.dropdown:hover .dropbtn {background-color: #3e8e41;}
+</style>
+</head>
+<body>
+
+
+		<header>
+			<div class="logo-container">
+				<img src="https://raw.githubusercontent.com/developedbyed/laptop-ui/master/img/logo.svg" alt="logo" />
+				<h4 class="logo">Vision Labs</h4>
+			</div>
+			<nav>
+				<ul class="nav-links">
+					<li><a class="nav-link" href="/home">Home</a></li>
+					<li><div class="dropdown">
+					<a class="nav-link">Simulations</a>
+						<div class="dropdown-content">
+							<a class="nav-link" href="physim">Physics</a>
+							<a class="nav-link" href="chemsim">Chemistry</a>
+							<a class="nav-link" href="biosim">Biology</a>
+						</div>
+						</div>
+					</li>
+					<li><a class="nav-link" href="">Contact</a></li>
+					<li><a class="nav-link" href="/login">Login</a></li>
+					<li><a class="nav-link" href="/signup">Signup</a></li>
+				</ul>
+			</nav>
+			<div class="cart">
+				<img src="https://raw.githubusercontent.com/developedbyed/laptop-ui/master/img/cart.svg" alt="cart" />
+			</div>
+		</header>
+
+		<main>
+			<section class="presentation">
+				<div class="introduction">
+					<div class="intro-text">
+						
+						
+				{% block content %}
+							
+				{% endblock %}
+			</section>
+
+			<div class="laptop-select">
+				<img src="https://raw.githubusercontent.com/developedbyed/laptop-ui/master/img/arrow-left.svg" alt="" />
+				<img src="https://raw.githubusercontent.com/developedbyed/laptop-ui/master/img/dot.svg" alt="" />
+				<img src="https://raw.githubusercontent.com/developedbyed/laptop-ui/master/img/dot-full.svg" alt="" />
+				<img src="https://raw.githubusercontent.com/developedbyed/laptop-ui/master/img/dot-full.svg" alt="" />
+				<img src="https://raw.githubusercontent.com/developedbyed/laptop-ui/master/img/arrow-right.svg" alt="" />
+			</div>
+
+			<img class="big-circle" src="https://raw.githubusercontent.com/developedbyed/laptop-ui/master/img/big-eclipse.svg" alt="" />
+			<img class="medium-circle" src="https://raw.githubusercontent.com/developedbyed/laptop-ui/master/img/mid-eclipse.svg" alt="" />
+			<img class="small-circle" src="https://raw.githubusercontent.com/developedbyed/laptop-ui/master/img/small-eclipse.svg" alt="" />
+		</main>
+
+</body>
+</html>
+

@@ -1,0 +1,25 @@
+{% extends 'Register/base.html' %}
+
+{% block content %}
+<style>
+form {
+  width   : 10%;
+  /* we create our grid */
+  display  : grid;
+  grid-gap : 15px;
+  grid-template-columns : repeat(2, 1fr);
+  grid-template-rows    : 2em 2em;
+}
+</style>
+<div id="login">
+<form class='site-form' action="{% url 'login' %}" method='post'>
+{% csrf_token %}
+{{ form }}
+
+<br>
+<input type="submit" value="Login">
+
+</form>
+
+</div>
+{% endblock %}

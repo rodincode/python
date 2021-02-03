@@ -1,0 +1,145 @@
+{% extends 'Register/base.html' %}
+{% block content %}
+<h1>Physics Simulations</h1>
+<hr>
+<a href="javascript:showhide('Projectile')" style="color:purple;"> Projectile </a>    
+<div id="Projectile" style="display:none;">    
+<div>
+	<h1>Projectile Motion</h1>
+	<p>This simulation is based on Newton's Laws of Motion".</p>
+<div style="width:960px; margin-left:auto; margin-right:auto;">
+<img src="/media/angrybg.png" width="960" height="640"  style="position:absolute;">
+<canvas id="ballCanvas" width="960" height="640" style="position:absolute;">
+  Canvas not supported; please update your browser.
+</canvas>
+<canvas id="traceCanvas" width="960" height="640" style="position:relative;">
+  Canvas not supported; please update your browser.
+</canvas></div>
+
+<div style="text-align:center">
+<input type="button" value="Fire!" onclick="fireProjectile();">
+<input type="button" value="Freeze" onclick="freeze();">
+<input type="button" value="Thaw" onclick="moveProjectile();">
+<p>
+Initial speed: <input type="range" id="speedSlider" min="0" max="80" step="1" value="30" oninput="showSpeed();" onchange="showSpeed();">
+<span id="speedReadout">30</span> m/s
+<p>
+Initial angle: <input type="range" id="angleSlider" min="-180" max="180" step="1" value="10" oninput="showAngle();" onchange="showAngle();">
+<span id="angleReadout">10</span>&deg;
+<p>
+Simulation Speed: <input type="range" id="hurrySlider" min="1" max="10" step="1" value="1">
+</div>
+
+<script>
+var ballCanvas = document.getElementById("ballCanvas");
+var ballContext = ballCanvas.getContext("2d");
+var traceContext = document.getElementById("traceCanvas").getContext("2d");
+
+var gravity = 9.81;        // grav. constant m/s/s
+var dt = 0.1;              // time step in seconds
+
+// origin in pixels
+var ox = 170;
+var oy = 200;
+var metersPerPixel = 0.5;  // depends on the image, adjust to suit, smaller gives faster movement
+
+var t=0;
+var x=0;
+var y=0;
+var vx=0;
+var vy=0;
+
+var speedSlider = document.getElementById("speedSlider");
+var angleSlider = document.getElementById("angleSlider");
+var hurrySlider = document.getElementById("hurrySlider");
+var speedReadout = document.getElementById("speedReadout");
+var angleReadout = document.getElementById("angleReadout");
+var timer;
+
+var birdImage = new Image();
+birdImage.src = '/media/bird.jpg';
+
+setTimeout(drawProjectile,500); // initial draw after everything is loaded
+
+function showSpeed() {
+    speedReadout.innerHTML = speedSlider.value;
+}
+
+function showAngle() {
+    angleReadout.innerHTML = angleSlider.value;
+}
+
+function freeze() {
+  window.clearTimeout(timer);
+  timer=null;
+}
+
+function fireProjectile() {
+    if (timer) freeze();
+	x = 0;
+    y = 0;
+	t = 0;
+    var v = Number(speedSlider.value);
+    var a = Number(angleSlider.value);
+	vx = v*Math.cos(a*Math.PI/180);
+	vy = v*Math.sin(a*Math.PI/180);
+    moveProjectile();
+}
+
+
+function drawProjectile() {
+    x = vx*t;
+	y = vy*t-.5*gravity*t*t;
+    var px = ox + x/metersPerPixel;
+    var py = oy - y/metersPerPixel;
+	ballContext.clearRect(0, 0, ballCanvas.width, ballCanvas.height);
+    traceContext.beginPath();
+    traceContext.arc(px, py, 1, 0, 2*Math.PI);
+    traceContext.fillStyle = "orange";
+    traceContext.fill();
+	if (birdImage.complete) ballContext.drawImage(birdImage,px-25,py-25);
+}
+
+function moveProjectile() {
+	t += dt;
+	drawProjectile();
+	if (timer) window.clearTimeout(timer);
+    var h = Number(hurrySlider.value);
+    timer = window.setTimeout(moveProjectile, dt*1000/h);
+}
+
+</script>
+</div>
+</div>
+
+<br>
+
+
+<a href="javascript:showhide('Balancing Act')" style="color:purple;"> Balancing Act  </a>    
+<div id="Balancing Act" style="display:none;">    
+<div>
+	<h1>Balancing Act</h1>
+<iframe src="https://phet.colorado.edu/sims/html/balancing-act/latest/balancing-act_en.html" width="800" height="600" scrolling="no" allowfullscreen></iframe>
+<script src="https://h5p.org/sites/all/modules/h5p/library/js/h5p-resizer.js" charset="UTF-8"></script>
+</div>
+</div>
+
+<br>
+
+
+<a href="javascript:showhide('Bending Light')" style="color:purple;"> Bending Light  </a>    
+<div id="Bending Light" style="display:none;">    
+<div>
+	<h1>Bending Light</h1>
+<iframe src="https://phet.colorado.edu/sims/html/bending-light/latest/bending-light_en.html" width="800" height="600" scrolling="no" allowfullscreen></iframe>
+
+<script src="https://h5p.org/sites/all/modules/h5p/library/js/h5p-resizer.js" charset="UTF-8"></script>
+</div>
+</div>
+
+
+<script>
+function showhide(id) {     var e = document.getElementById(id);    e.style.display = (e.style.display == 'block') ? 'none' : 'block'; } 
+</script>
+
+{% endblock %}

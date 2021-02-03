@@ -1,0 +1,17 @@
+{% extends 'Register/base.html' %}
+{% block content %}
+<h1>Welcome to the community</h1>
+{% for i in user %}
+    <hr>
+    <div>
+        <h3>Name: {{ i.user }}</h3>
+        <h5><a href="">{{ i.portfolio_site }}</a></h5>
+        <div class="hover-item">
+        <img style="border: 1px solid #ddd;
+        border-radius: 4px;
+        padding: 5px;
+        width: 80px;" src="{{i.profile_pic.url}}">
+        </div>
+    </div>
+{% endfor %}
+{% endblock %}
