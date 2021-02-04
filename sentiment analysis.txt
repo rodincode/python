@@ -1,0 +1,137 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Fri Jun 21 09:57:59 2019
+
+@author: LENOVO
+"""
+
+
+import pandas as pd 
+
+
+filename = r"C:\Users\LENOVO\Downloads\Tweets.csv"
+
+
+df = pd.read_csv(filename,encoding="unicode_escape")
+df=df[df.airline_sentiment != 'neutral']
+
+
+all_data = df.drop_duplicates(keep='first', inplace=False)
+cleaned_data = all_data.dropna()
+
+sentences = cleaned_data['text']
+y = cleaned_data['airline_sentiment']
+
+numerical_outcomes=y.replace(["positive","negative"],[1,2])
+
+import nltk
+nltk.download('stopwords')
+from nltk.corpus import stopwords
+eng_stops = set(stopwords.words('english'))
+
+#import Tokenizer
+
+#tk =Tokenizer(num_words=1000,filters='!"#$%&()*+,-./:;<=>?@[\\]^_`{|}~\t\n',lower=True,split="")
+
+
+#print('Fitted tokenizer on {} documents'.format(tk.document_count))
+#print('{} words in dictionary'.format(tk.num_words))
+#print('Top 5 common words are:', collections.Counter(tk.word_counts).most_common(5))              
+
+from sklearn.model_selection import train_test_split
+x_train, x_test, y_train, y_test = train_test_split(sentences, numerical_outcomes, random_state=1000)
+#tk.fit_on_texts(x_train)
+
+from sklearn.feature_extraction.text import CountVectorizer
+
+vectorizer = CountVectorizer()
+vectorizer.fit(x_train)
+
+X_train = vectorizer.transform(x_train)
+
+X_test  = vectorizer.transform(x_test)
+
+from sklearn.linear_model import LogisticRegression
+
+classifier = LogisticRegression()
+
+classifier.fit(X_train, y_train)
+
+score = classifier.score(X_test, y_test)
+
+print("\n Accuracy:", score)   #model accuracy
+
+
+
+#########################################################
+
+###Predicting the sentiment of user input
+
+#########################################################
+
+txt = input("Enter expression: ")
+
+test_sentences = [txt]
+
+test_bag = vectorizer.transform(test_sentences)
+
+result_label = classifier.predict(test_bag)         #predicting the class
+
+result_score = classifier.predict_proba(test_bag)   #Probobilities of belonging to both classes
+#y_classes = result_score.argmax(axis=-1)
+#
+
+if result_label==1:
+
+    print("Positive Sentiment", result_score)
+elif result_label==2:
+    print("Negative Sentiment", result_score)
+#elif result_score==0:
+
+   # print("Neutral", result_score)
+
+
+#
+
+from keras.models import Sequential
+from keras.layers import Dense
+from keras import optimizers
+
+model= Sequential()
+model.add(Dense(22, input_dim=11216, activation='relu'))
+model.add(Dense(7))
+model.add(Dense(8, activation='relu'))
+model.add(Dense(1, activation='sigmoid'))
+
+#Compile Model
+ gd = optimizers.SGD(lr=0.01, decay=1e-6, momentum=0.9, nesterov=True)
+model.compile(loss='mean_squared_error', optimizer=sgd)
+#model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
+
+#fit the model
+model.fit(X_train,y_train,epochs=15, batch_size=10)
+
+#evaluate the model
+scores = model.evaluate(X_test,y_test)
+#print('\n%s: %.2f%%' % (model.metrics_names[1], scores[1]*100))
+
+#########################################################
+
+###Predicting the sentiment of user input
+
+#########################################################
+
+
+result_label_1 = model.predict(test_bag)
+result_score_1 = model.predict_proba(test_bag)
+if result_label_1 <=1.5:
+    print("positive sentiment")
+elif result_label_1>=1.5:
+    print("Negative Sentiment")
+#y_classes = result_score_1.argmax(axis=-1)
+
+
+#elif result_label_1==0:
+#    print("Neutral", result_score_1)
+
+

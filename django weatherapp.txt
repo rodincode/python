@@ -1,0 +1,123 @@
+django-admoin startproject weatherabc
+python manage.py startapp weather
+python mange.py runserver 
+### Migrations later ##
+### Crate superuser ###
+python manage.py migrate
+python manage.py createsuperuser
+## give username and password
+### runserver again
+127.0.0.1/admin ---> add or delete cities later
+user send requests to django from server--> calls urls.py calls views.py calls urls.py calls views.py calls models.py calls data from dataset and 
+showing this on templates
+### make a template of weather app
+templates folder inside app folder 
+inside that one more folder of the app name then create a html file
+
+************* M V T MODEL ***************8
+#### urls.py of the project 
+path("",include("weather.urls")) 
+
+### make a urls.py in the app folder 
+from .views import views
+path("",views.index,name='homepage')
+
+## views.py in app folder
+
+from django.shortcuts import render
+def index(request):
+    return render(request,'weather/weather.html',*somedatecomingfrommodels.py*)
+
+### Settings.py ##
+mentions installed apps --> 'weather'
+
+#### Inspect element #####
+
+### send and recieve data
+def index(request):
+    x={'city': 'abc'}  #sending the data
+    return render(request,'weather/weather.html',x)
+
+## HTML ##
+receive dict from views.py 
+add the key {{city}}   --> like a variable which will be used in html file
+
+### go to openweathermap.org and create account --> go to api section 
+## copy api call --> this will give us the json file its just like a nested dictionary in python
+## in views.py of apps 
+
+
+import requests
+import json
+
+def index(request):
+    city= 'New Delhi'  #sending the data
+    url= f'https://api.openweathermap.org......{city}.... '
+    r = requests.get(url).json()
+    print(r)
+    return render(request,'weather/weather.html',{'city':city})
+
+
+# html form is front end. Its fine and it works.
+
+### django provides us forms at the backend (much easier)
+
+#### go to models.py and make a class 
+## inherit properties from django models
+
+class City(models.Model):
+    name = models.CharField(max_length=20)
+    #Added one row in database
+
+    def __str__(self):
+    return self.name
+
+#now register this model in admin.py
+
+from .models import City
+admin.site.register(City)
+
+#migrate the model
+manage.py makemigrations
+manage.py migrate
+
+
+###now data can be added only through admin
+
+## we want to directly write data to the database via html 
+
+# create forms.python
+from django.forms import TextInput, ModelForm
+from .models import City,
+
+class CityForm(ModelForm):
+    class Meta:
+       model = City
+       fields = ['name']
+       widgets = {'name':TextInput(attrs={'class':'input','placeholder':"City Name"})}
+
+# now remove html form and add django form instead
+
+<form method= 'POST'>
+{% csrf_token %}
+<div class='control is-'
+
+
+# views.py
+from .models import City
+from .forms import CityForm
+def index(request):
+    
+    url= f'https://api.openweathermap.org......{city}.... '
+    form = CityForm()
+    cities = City.objects.all()
+    for city in cities:
+       .. .. . 
+       .... . .
+       . .. .
+
+    r = requests.get(url).json()
+    print(r)
+    return render(request,'weather/weather.html',{'city':city})
+
+
